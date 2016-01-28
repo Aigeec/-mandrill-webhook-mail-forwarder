@@ -4,15 +4,39 @@
 Node Module to send a mandrill formatted event to a specified email account via Mandrill
 
 ## Installation
-
-  npm install mandrill-mail-forwarder --save
-
+```bash
+$ npm install mandrill-mail-forwarder --save
+```
 ## Usage
 
+```javascript
+var forwarder = require('mandrill-webhook-mail-forwarder');
+
+var promises = mandrillEvents.map(function(event){
+  return forwarder(event);
+});
+
+Q.all(promises).done(function(){});
+
+```
+The forwarder take an object in the format of a mandrill event as a parameter and returns a promise. The promise resolves when the mail is sent.
+
+## Options
+
+```javascript
+var options = {
+  forwardTo: 'address@to.forward.to',
+  mandrillApiKey: 'Your mandrill api key'
+};
+```
+
+  * **forwardTo:** the address you want to send the email message to
+  * **mandrillApiKey:** Your mandrill api key
+
 ## Tests
-
-  npm test
-
+```bash
+$ npm test
+```
 ## Links
 
   [api documentation](./docs/api.md)
