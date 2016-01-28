@@ -1,6 +1,6 @@
 {
   "name": "mandrill-webhook-mail-forwarder",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Node Module to send a mandrill formatted event to a specified email account via Mandrill",
   "main": "index.js",
   "scripts": {
