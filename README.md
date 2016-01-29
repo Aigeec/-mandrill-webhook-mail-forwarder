@@ -1,4 +1,4 @@
-# mandrill-webhook-mail-forwarder
+mandrill-webhook-mail-forwarder
 =========
 
 Node Module to send a mandrill formatted event to a specified email account via Mandrill
