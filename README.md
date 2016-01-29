@@ -5,7 +5,7 @@ Node Module to send a mandrill formatted event to a specified email account via 
 
 ## Installation
 ```bash
-$ npm install mandrill-mail-forwarder --save
+$ npm install mandrill-webhook-mail-forwarder--save
 ```
 ## Usage
 
