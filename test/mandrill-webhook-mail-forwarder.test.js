@@ -40,8 +40,8 @@
       expect(forwarder.length).to.equals(1);
     });
 
-    it('should return a function that takes a single event parameter', function() {
-      expect(forwarder(config).length).to.equals(1);
+    it('should return a function that takes a 3 parameters', function() {
+      expect(forwarder(config).length).to.equals(3);
     });
 
     describe('it validates it configuration', function() {
@@ -61,21 +61,24 @@
     });
 
     it('should send a message for each event that is not blacklisted', function(done) {
-      forwarder(config)({ msg: {} }).then(function() {
+      var req = {};
+      req.mandrillEvents = [{ msg: {} }];
+      forwarder(config)(req, {}, function() {
         expect(send).to.have.been.calledOnce;
-      }).done(done);
+        done();
+      });
     });
 
     it('does not forward emails from senders that are blacklisted', function(done) {
-      forwarder(config)({ msg: { from_email: 'black@listed.email' } }).then(function() {
+      var req = {};
+      req.mandrillEvents = [{ msg: { from_email: 'black@listed.email' } }];
+      forwarder(config)(req, {}, function() {
         expect(send).not.to.have.been.called;
-      }).done(done);
+        done();
+      });
     });
 
     it('should reject the promise with the error if the mail fails to send', function(done) {
-
-      var successSpy = sinon.spy();
-      var errorSpy = sinon.spy();
 
       mandrillStub.Mandrill = function(options) {
         return {
@@ -88,11 +91,10 @@
       };
 
       var forwarder = proxyquire('../src/mandrill-webhook-mail-forwarder', { 'mandrill-api/mandrill': mandrillStub });
-
-      forwarder(config)({ msg: { } }).then(successSpy, errorSpy).done(function() {
-        expect(errorSpy).to.have.been.calledOnce;
-        expect(errorSpy.args[0][0].message).to.equals('Message sending failed');
-        expect(successSpy).not.to.have.been.called;
+      var req = {};
+      req.mandrillEvents = [{ msg: {} }];
+      forwarder(config)(req, {}, function(err) {
+        expect(err.message).to.equals('Message sending failed');
         done();
       });
     });

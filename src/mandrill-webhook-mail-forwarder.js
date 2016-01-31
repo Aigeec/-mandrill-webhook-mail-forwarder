@@ -43,9 +43,18 @@
       return deferred.promise;
     };
 
-    return forwardEmail;
+    var forwardEvents = function(req, res, next) {
+
+      var promises = _.map(req.mandrillEvents, forwardEmail);
+
+      Q.all(promises).done(
+        next,
+        next
+      );
+    };
+
+    return forwardEvents;
   };
 
   module.exports = MailForwarder;
-
 })();
