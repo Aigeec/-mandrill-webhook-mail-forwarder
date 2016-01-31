@@ -1,7 +1,7 @@
 mandrill-webhook-mail-forwarder
 =========
 
-Node Module to send a mandrill formatted event to a specified email account via Mandrill
+A express compatible middleware Node Module to send a list mandrill formatted events to a specified email account via Mandrill.
 
 ## Installation
 ```bash
@@ -9,17 +9,15 @@ $ npm install mandrill-webhook-mail-forwarder--save
 ```
 ## Usage
 
+This module
+
 ```javascript
 var forwarder = require('mandrill-webhook-mail-forwarder');
 
-var promises = mandrillEvents.map(function(event){
-  return forwarder(event);
-});
-
-Q.all(promises).done(function(){});
+app.use(forwarder(options));
 
 ```
-The forwarder take an object in the format of a mandrill event as a parameter and returns a promise. The promise resolves when the mail is sent.
+The forwarder expects the events to be available at req.mandrillEvents. The events should be in the format of a mandrill event. Will call next when all mails are sent.
 
 ## Options
 
